@@ -11,9 +11,16 @@ export default function Dashboard() {
   // const { data:session } = useSession();
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
-  const {data:session} = useSession();
+  const {data:session,status} = useSession();
 
   const router = useRouter()
+
+  useEffect(()=>{
+    if(status==="unauthenticated"){
+      alert("Please Login.")
+      router.push('/login')
+    }
+  },[status])
 
   useEffect(() => {
     if (!session?.user?.email) return;

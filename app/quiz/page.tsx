@@ -42,6 +42,8 @@ export default function QuizPage() {
   const {data:session} = useSession()
   const router = useRouter()
 
+  
+
   useEffect(() => {
     (async () => {
       try {

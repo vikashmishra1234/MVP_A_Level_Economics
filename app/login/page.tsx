@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [loading,setLoading] = useState(false)
   const {data:session,status} = useSession()
 
   useEffect(()=>{
@@ -22,12 +23,13 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
+    setLoading(true)
     const result = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
+    setLoading(false)
     if (result?.error) {
       setError("Invalid email or password");
     } else {
@@ -71,8 +73,11 @@ export default function LoginPage() {
           <button
             type="submit"
             className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
           >
-            Login
+            {
+              loading?"Loading..":"Login"
+            }
           </button>
         </form>
 
